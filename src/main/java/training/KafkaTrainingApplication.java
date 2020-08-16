@@ -7,7 +7,6 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.core.env.Environment;
 
 import java.time.LocalDateTime;
-import java.util.Arrays;
 
 @SpringBootApplication
 public class KafkaTrainingApplication implements CommandLineRunner {

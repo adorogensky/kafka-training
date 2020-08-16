@@ -2,6 +2,7 @@ package training;
 
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.annotation.EnableKafka;
@@ -16,20 +17,28 @@ import java.util.Map;
 @EnableKafka
 public class KafkaConsumerConfig {
 
+    @Value("${spring.kafka.bootstrap-servers}")
+    private String bootstrapServers;
+
     @Bean
-    ConsumerFactory<String, String> consumerFactory() {
+    Map<String, Object> consumerFactoryProps() {
         Map<String, Object> config = new HashMap<>();
-        config.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
+        config.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
         config.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
         config.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
         config.put(ConsumerConfig.GROUP_ID_CONFIG, "all");
-        return new DefaultKafkaConsumerFactory<>(config);
+        return config;
+    }
+
+    @Bean
+    ConsumerFactory<String, String> consumerFactory() {
+        return new DefaultKafkaConsumerFactory<>(consumerFactoryProps());
     }
 
     @Bean
     ConcurrentKafkaListenerContainerFactory<String, String> listenerContainerFactory() {
-        ConcurrentKafkaListenerContainerFactory<String, String> listenerContainerFactory
-            = new ConcurrentKafkaListenerContainerFactory<>();
+        ConcurrentKafkaListenerContainerFactory<String, String>
+            listenerContainerFactory = new ConcurrentKafkaListenerContainerFactory<>();
         listenerContainerFactory.setConsumerFactory(consumerFactory());
         return listenerContainerFactory;
     }
