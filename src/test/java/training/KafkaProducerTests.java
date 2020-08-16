@@ -10,11 +10,8 @@ import java.time.LocalDateTime;
 @SpringBootTest
 class KafkaTrainingApplicationTests {
 
-	@Autowired
-	private KafkaTemplate<String, String> kafkaTemplate;
-
 	@Test
-	void sendMessage() {
-		kafkaTemplate.send("topic", "inbound message " + LocalDateTime.now());
+	void contextLoads() {
+
 	}
 }
