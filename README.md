@@ -5,4 +5,4 @@
 * KafkaAdmin
     * create a topic [OK]
 * KafkaProducer
-    * [send a message](see errors/kafka-producer-heap-space/classes/training.KafkaTrainingApplicationTests.html#sendMessage()) [FAIL] 
+    * [send a message](https://htmlpreview.github.io/?https://github.com/adorogensky/kafka-training/blob/master/errors/kafka-producer-heap-space/classes/training.KafkaTrainingApplicationTests.html#sendMessage()) [FAIL] 
