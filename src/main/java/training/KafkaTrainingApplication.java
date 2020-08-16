@@ -1,28 +1,56 @@
 package training;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.Bean;
-import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.core.env.Environment;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
 
 @SpringBootApplication
 public class KafkaTrainingApplication implements CommandLineRunner {
 
-	@Autowired
-	private KafkaTemplate<String, String> kafkaTemplate;
+	private final ApplicationContext applicationContext;
+	private final Environment environment;
+
+	private static final String USAGE_MSG = "Use SPRING_PROFILES_ACTIVE=[producer|consumer] env variable";
+
+	KafkaTrainingApplication(ApplicationContext applicationContext, Environment environment) {
+		this.applicationContext = applicationContext;
+		this.environment = environment;
+	}
 
 	public static void main(String[] args) {
 		SpringApplication.run(KafkaTrainingApplication.class, args);
 	}
 
 	@Override
-	public void run(String... args) {
-		System.out.println("Starting KafkaTrainingApplication ...");
-		kafkaTemplate.send("topic", "inbound message " + LocalDateTime.now());
+	public synchronized void run(String... args) {
+		if (isProducer()) {
+			applicationContext.getBean(KafkaProducer.class).produce("inbound message " + LocalDateTime.now());
+		} else if (isConsumer()) {
+			try {
+				System.out.printf("[Thread ID = %d] Putting main thread to sleep ...\n", Thread.currentThread().getId());
+				this.wait();
+			} catch (InterruptedException ex) {
+				Thread.currentThread().interrupt();
+			}
+		} else {
+			throw new IllegalArgumentException(USAGE_MSG);
+		}
+	}
+
+	private boolean isProducer() {
+		return springActiveProfilesEquals("producer");
+	}
+
+	private boolean isConsumer() {
+		return springActiveProfilesEquals("consumer");
+	}
+
+	private boolean springActiveProfilesEquals(String activeProfile) {
+		return environment.getActiveProfiles().length == 1 && activeProfile.equals(environment.getActiveProfiles()[0]);
 	}
 }
