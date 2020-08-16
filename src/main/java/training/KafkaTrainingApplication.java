@@ -16,9 +16,5 @@ public class KafkaTrainingApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) {
 		System.out.println("Starting KafkaTrainingApplication ...");
-		System.out.println("(main) Heap size: " + Runtime.getRuntime().totalMemory()/1024/1024 + "MB");
-		System.out.println("(main) Heap max size: " + Runtime.getRuntime().maxMemory()/1024/1024 + "MB");
-		System.out.println("(main) Heap free size: " + Runtime.getRuntime().freeMemory()/1024/1024 + "MB");
-
 	}
 }
