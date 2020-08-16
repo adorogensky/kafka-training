@@ -15,7 +15,7 @@ public class KafkaProducer {
     }
 
     public void produce(String message) {
-        kafkaTemplate.send("topic", message);
+        kafkaTemplate.send("topicA", message);
         System.out.printf("Produced message: \"%s\"\n", message);
     }
 }

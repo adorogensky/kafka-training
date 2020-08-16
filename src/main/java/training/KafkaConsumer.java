@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 @Profile("consumer")
 public class KafkaConsumer {
 
-    @KafkaListener(topics = "topic", groupId = "all")
+    @KafkaListener(topics = "topicA", groupId = "group1")
     public void consume(String message) {
         System.out.printf("[Thread ID = %d] Consumed message: \"%s\"\n", Thread.currentThread().getId(), message);
     }
