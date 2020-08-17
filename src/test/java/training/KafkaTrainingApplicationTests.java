@@ -7,7 +7,6 @@ import org.springframework.kafka.core.KafkaTemplate;
 
 import java.time.LocalDateTime;
 
-@SpringBootTest
 class KafkaTrainingApplicationTests {
 
 	@Test
