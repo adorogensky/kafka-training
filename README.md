@@ -35,5 +35,13 @@ SPRING_PROFILES_ACTIVE=consumer java -jar build/libs/kafka-training-0.0.1-SNAPSH
    * do consumers read from all the topic partitions?
    * can more than one consumer within a consumer group be subscribed to the same topic and partition?
    * can a producer write to a topic without specifing a partition if the topic has more than one partition?
+## Misc
+```
+auto.create.topics.enable
+compression.type
+leaders for a partition of a topic
+topic is divided in a set of ordered partitions, each of which is consumed by exactly one consumer within each consumer group
+```
+
 
   
