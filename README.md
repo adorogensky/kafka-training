@@ -31,4 +31,9 @@ SPRING_PROFILES_ACTIVE=consumer java -jar build/libs/kafka-training-0.0.1-SNAPSH
 ## Questions
    * @KafkaListner topic gets created when the listener is intialized?
    * KafkaTemplate topic gets created when a message is sent
+   * can 'group id' be left out?
+   * do consumers read from all the topic partitions?
+   * can more than one consumer within a consumer group be subscribed to the same topic and partition?
+   * can a producer write to a topic without specifing a partition if the topic has more than one partition?
+
   
